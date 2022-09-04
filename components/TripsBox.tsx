@@ -2,18 +2,20 @@ import { StyleSheet, Text, View, ViewStyle } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#111111",
+    backgroundColor: "#333333",
     alignItems: "flex-start",
     paddingHorizontal: 12,
     paddingVertical: 20,
     borderRadius: 4,
   },
-  name: {
-    fontSize: 19,
-    fontWeight: "500",
-    marginBottom: 6,
+  label: {
+    fontSize: 17,
+    color: "#bbbbbb",
+    marginBottom: 8,
   },
-  text: {
+  numTrips: {
+    fontSize: 30,
+    fontWeight: "300",
     color: "#ffffff",
   },
 });
@@ -22,12 +24,11 @@ type Props = {
   style?: ViewStyle;
 };
 
-export default function MemberBox(props: Props) {
+export default function TripsBox(props: Props) {
   return (
     <View style={[styles.container, props.style]}>
-      <Text style={[styles.text, styles.name]}>Sean Wang</Text>
-      <Text style={styles.text}>AAdvantage member</Text>
-      <Text style={styles.text}>Available award miles: 32,030</Text>
+      <Text style={styles.label}>You have</Text>
+      <Text style={styles.numTrips}>1 upcoming trip</Text>
     </View>
   );
 }
