@@ -1,26 +1,17 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import MemberBox from "./components/MemberBox";
+import { StyleSheet, SafeAreaView } from "react-native";
+import HomeScreen from "./screens/HomeScreen";
 
 const styles = StyleSheet.create({
   app: {
     flex: 1,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    paddingHorizontal: 16,
+    backgroundColor: "#222222",
   },
 });
 
 export default function App() {
   return (
     <SafeAreaView style={styles.app}>
-      <StatusBar style="auto" />
-      <View style={styles.container}>
-        <MemberBox />
-        <Text>Open up App.tsx to start working on your app!</Text>
-      </View>
+      <HomeScreen />
     </SafeAreaView>
   );
 }
