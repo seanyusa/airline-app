@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import MemberBox from "../components/MemberBox";
 import TripsBox from "../components/TripsBox";
 import InfoHero from "../components/InfoHero";
@@ -10,6 +10,17 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     overflow: "visible",
+  },
+  topRow: {
+    display: "flex",
+    flexDirection: "row",
+    paddingHorizontal: 12,
+    paddingVertical: 16,
+  },
+  logo: {
+    fontSize: 21,
+    color: "#fff",
+    fontFamily: "OpenSans-SemiBold",
   },
   trips: {
     marginTop: 12,
@@ -27,7 +38,13 @@ const styles = StyleSheet.create({
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.topRow}>
+          <Text style={styles.logo}>Airline</Text>
+        </View>
         <MemberBox />
         <TripsBox style={styles.trips} />
         <ScrollView
