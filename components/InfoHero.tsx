@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     paddingHorizontal: 12,
     paddingVertical: 20,
-    borderRadius: 4,
+    borderRadius: 6,
     height: 400,
     width: 324,
   },

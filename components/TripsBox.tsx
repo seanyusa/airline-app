@@ -12,17 +12,18 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#2b2b2b",
     alignItems: "flex-start",
-    borderRadius: 4,
+    borderRadius: 6,
     overflow: "hidden",
   },
   numTripsContainer: {
     paddingHorizontal: 12,
-    paddingVertical: 16,
+    paddingTop: 10,
+    paddingBottom: 8,
   },
   label: {
     fontSize: 17,
     color: "#bbbbbb",
-    marginBottom: 4,
+    marginBottom: 2,
     fontFamily: "OpenSans-Regular",
   },
   numTrips: {
@@ -41,7 +42,8 @@ const styles = StyleSheet.create({
   tripRow: {
     flex: 1,
     paddingHorizontal: 12,
-    paddingVertical: 12,
+    paddingTop: 10,
+    paddingBottom: 12,
     flexDirection: "row",
   },
   tripTextContainer: {
