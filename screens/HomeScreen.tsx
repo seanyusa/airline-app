@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
   infoArea: {
     marginTop: 12,
   },
+  infoItem: {
+    marginHorizontal: 6,
+  },
 });
 
 export default function HomeScreen() {
@@ -22,9 +25,19 @@ export default function HomeScreen() {
       <ScrollView>
         <MemberBox />
         <TripsBox style={styles.trips} />
-        <View style={styles.infoArea}>
-          <InfoHero />
-        </View>
+        <ScrollView
+          style={styles.infoArea}
+          horizontal
+          pagingEnabled
+          disableIntervalMomentum
+          decelerationRate={0}
+          snapToInterval={324 + 12}
+          snapToAlignment="center"
+        >
+          <InfoHero style={styles.infoItem} />
+          <InfoHero style={styles.infoItem} />
+          <InfoHero style={styles.infoItem} />
+        </ScrollView>
       </ScrollView>
     </View>
   );
