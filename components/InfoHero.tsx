@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ViewStyle } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#333333",
+    backgroundColor: "#dddddd",
     alignItems: "flex-start",
     paddingHorizontal: 12,
     paddingVertical: 20,
@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 17,
     color: "#fff",
-    marginBottom: 8,
+    marginBottom: 4,
     fontFamily: "OpenSans-SemiBold",
   },
   content: {
-    fontSize: 13,
+    fontSize: 12,
     color: "#fff",
     fontFamily: "OpenSans-Regular",
   },
@@ -25,16 +25,15 @@ const styles = StyleSheet.create({
 
 type Props = {
   style?: ViewStyle;
+  title: string;
+  description: string;
 };
 
 export default function InfoHero(props: Props) {
   return (
     <View style={[styles.container, props.style]}>
-      <Text style={styles.title}>Turn shopping into travel</Text>
-      <Text style={styles.content}>
-        Everyday spend can earn you miles to redeem on travel plus Loyalty
-        Points toward status at the same time.
-      </Text>
+      <Text style={styles.title}>{props.title}</Text>
+      <Text style={styles.content}>{props.description}</Text>
     </View>
   );
 }

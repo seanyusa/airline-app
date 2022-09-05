@@ -77,9 +77,21 @@ export default function HomeScreen() {
           snapToAlignment="center"
           showsHorizontalScrollIndicator={false}
         >
-          <InfoHero style={styles.infoItem} />
-          <InfoHero style={styles.infoItem} />
-          <InfoHero style={styles.infoItem} />
+          <InfoHero
+            style={styles.infoItem}
+            title="Turn shopping into travel"
+            description="Everyday spend can earn you miles to redeem on travel plus Loyalty Points toward status at the same time."
+          />
+          <InfoHero
+            style={styles.infoItem}
+            title="Experience the Northern Lights"
+            description="Find great fares to Alaska."
+          />
+          <InfoHero
+            style={styles.infoItem}
+            title="Where's open, what's required?"
+            description="Check entry restrictions and COVID-19 travel requirements for countries around the world."
+          />
         </ScrollView>
       </ScrollView>
     </View>
