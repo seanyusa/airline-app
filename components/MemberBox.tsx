@@ -2,10 +2,11 @@ import { StyleSheet, Text, View, ViewStyle } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#111111",
+    backgroundColor: "#0b0b0baa",
     alignItems: "flex-start",
     paddingHorizontal: 12,
-    paddingVertical: 20,
+    paddingTop: 16,
+    paddingBottom: 20,
     borderRadius: 4,
   },
   name: {

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ViewStyle } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#333333",
+    backgroundColor: "#2b2b2b",
     alignItems: "flex-start",
     borderRadius: 4,
   },
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   tripName: {
     fontSize: 22,
-    color: "#3d49eb",
+    color: "#4693fa",
     fontFamily: "OpenSans-Regular",
   },
   tripDetails: {
