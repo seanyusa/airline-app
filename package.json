@@ -16,7 +16,8 @@
     "react-native": "0.69.5",
     "react-native-web": "~0.18.7",
     "expo-font": "~10.2.0",
-    "expo-splash-screen": "~0.16.2"
+    "expo-splash-screen": "~0.16.2",
+    "expo-linear-gradient": "~11.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

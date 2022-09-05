@@ -1,3 +1,4 @@
+import { LinearGradient } from "expo-linear-gradient";
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
 
 const styles = StyleSheet.create({
@@ -7,8 +8,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 20,
     borderRadius: 6,
-    height: 400,
+    height: 380,
     width: 324,
+  },
+  contentBackground: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    height: 128,
   },
   title: {
     fontSize: 17,
@@ -32,6 +39,10 @@ type Props = {
 export default function InfoHero(props: Props) {
   return (
     <View style={[styles.container, props.style]}>
+      <LinearGradient
+        colors={["rgba(0,0,0,0.6)", "rgba(0,0,0,0.2)", "rgba(0,0,0,0)"]}
+        style={styles.contentBackground}
+      />
       <Text style={styles.title}>{props.title}</Text>
       <Text style={styles.content}>{props.description}</Text>
     </View>
