@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 import backgroundImage from "./assets/dominika-roseclay-night-sky.jpg";
+import BottomSheet from "./components/BottomSheet";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -48,6 +49,7 @@ export default function App() {
         resizeMode="cover"
       />
       <HomeScreen />
+      <BottomSheet />
     </SafeAreaView>
   );
 }
