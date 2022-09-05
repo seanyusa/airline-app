@@ -1,10 +1,12 @@
 import { Animated, StyleSheet, View } from "react-native";
-import { createRef, Component, ReactNode } from "react";
+import { ReactNode, useRef, useState } from "react";
 import {
   PanGestureHandler,
   NativeViewGestureHandler,
   State,
   TapGestureHandler,
+  PanGestureHandlerEventPayload,
+  HandlerStateChangeEventPayload,
 } from "react-native-gesture-handler";
 
 const styles = StyleSheet.create({
@@ -27,84 +29,64 @@ type Props = {
   children?: ReactNode;
 };
 
-export default class BottomSheet extends Component<
-  Props,
-  { lastSnap: number }
-> {
-  masterdrawer = createRef();
-  drawer = createRef();
-  scroll = createRef();
+export default function BottomSheet(props: Props) {
+  const masterDrawerRef = useRef();
+  const drawerRef = useRef();
+  const scrollRef = useRef();
 
-  constructor(props: Props) {
-    super(props);
-    const START = props.snapPoints[0];
-    const END = props.snapPoints[props.snapPoints.length - 1];
+  const START = props.snapPoints[0];
+  const END = props.snapPoints[props.snapPoints.length - 1];
+  const [lastSnapPoint, setLastSnapPoint] = useState(END);
+  const lastScrollY = useRef(new Animated.Value(0)).current;
+  const lastScrollYValue = useRef(0);
+  const dragY = useRef(new Animated.Value(0)).current;
+  const translateYOffset = useRef(new Animated.Value(END)).current;
 
-    this.state = {
-      lastSnap: END,
-    };
+  lastScrollY.addListener(({ value }) => {
+    lastScrollYValue.current = value;
+  });
 
-    this._lastScrollYValue = 0;
-    this._lastScrollY = new Animated.Value(0);
-    this._onRegisterLastScroll = Animated.event(
-      [{ nativeEvent: { contentOffset: { y: this._lastScrollY } } }],
-      { useNativeDriver: true }
-    );
-    this._lastScrollY.addListener(({ value }) => {
-      this._lastScrollYValue = value;
-    });
+  const reverseLastScrollY = useRef(
+    Animated.multiply(new Animated.Value(-1), lastScrollY)
+  ).current;
 
-    this._dragY = new Animated.Value(0);
-    this._onGestureEvent = Animated.event(
-      [{ nativeEvent: { translationY: this._dragY } }],
-      { useNativeDriver: true }
-    );
-
-    this._reverseLastScrollY = Animated.multiply(
-      new Animated.Value(-1),
-      this._lastScrollY
-    );
-
-    this._translateYOffset = new Animated.Value(END);
-    this._translateY = Animated.add(
-      this._translateYOffset,
-      Animated.add(this._dragY, this._reverseLastScrollY)
+  const translateY = useRef(
+    Animated.add(
+      translateYOffset,
+      Animated.add(dragY, reverseLastScrollY)
     ).interpolate({
       inputRange: [START, END],
       outputRange: [START, END],
       extrapolate: "clamp",
-    });
-  }
+    })
+  ).current;
 
-  _onHeaderHandlerStateChange = ({ nativeEvent }) => {
-    if (nativeEvent.oldState === State.BEGAN) {
-      this._lastScrollY.setValue(0);
-    }
-    this._onHandlerStateChange({ nativeEvent });
-  };
-
-  _onHandlerStateChange = ({ nativeEvent }) => {
+  const onHandlerStateChange = ({
+    nativeEvent,
+  }: {
+    nativeEvent: HandlerStateChangeEventPayload & PanGestureHandlerEventPayload;
+  }) => {
     if (nativeEvent.oldState === State.ACTIVE) {
       let { velocityY, translationY } = nativeEvent;
-      translationY -= this._lastScrollYValue;
+      translationY -= lastScrollYValue.current;
       const dragToss = 0.05;
-      const endOffsetY =
-        this.state.lastSnap + translationY + dragToss * velocityY;
+      const endOffsetY = lastSnapPoint + translationY + dragToss * velocityY;
 
-      let destSnapPoint = this.props.snapPoints[0];
-      for (let i = 0; i < this.props.snapPoints.length; i++) {
-        const snapPoint = this.props.snapPoints[i];
+      let destSnapPoint = props.snapPoints[0];
+      for (let i = 0; i < props.snapPoints.length; i++) {
+        const snapPoint = props.snapPoints[i];
         const distFromSnap = Math.abs(snapPoint - endOffsetY);
         if (distFromSnap < Math.abs(destSnapPoint - endOffsetY)) {
           destSnapPoint = snapPoint;
         }
       }
-      this.setState({ lastSnap: destSnapPoint });
-      this._translateYOffset.extractOffset();
-      this._translateYOffset.setValue(translationY);
-      this._translateYOffset.flattenOffset();
-      this._dragY.setValue(0);
-      Animated.spring(this._translateYOffset, {
+
+      setLastSnapPoint(destSnapPoint);
+      translateYOffset.extractOffset();
+      translateYOffset.setValue(translationY);
+      translateYOffset.flattenOffset();
+      dragY.setValue(0);
+      Animated.spring(translateYOffset, {
         velocity: velocityY,
         tension: 68,
         friction: 12,
@@ -114,49 +96,53 @@ export default class BottomSheet extends Component<
     }
   };
 
-  render() {
-    return (
-      <TapGestureHandler
-        maxDurationMs={100000}
-        ref={this.masterdrawer}
-        maxDeltaY={this.state.lastSnap - this.props.snapPoints[0]}
-      >
-        <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
-          <Animated.View
-            style={[
-              StyleSheet.absoluteFillObject,
-              {
-                transform: [{ translateY: this._translateY }],
-              },
-            ]}
+  return (
+    <TapGestureHandler
+      maxDurationMs={100000}
+      ref={masterDrawerRef}
+      maxDeltaY={lastSnapPoint - props.snapPoints[0]}
+    >
+      <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
+        <Animated.View
+          style={[
+            StyleSheet.absoluteFillObject,
+            {
+              transform: [{ translateY: translateY }],
+            },
+          ]}
+        >
+          <PanGestureHandler
+            ref={drawerRef}
+            simultaneousHandlers={[scrollRef, masterDrawerRef]}
+            shouldCancelWhenOutside={false}
+            onGestureEvent={Animated.event(
+              [{ nativeEvent: { translationY: dragY } }],
+              { useNativeDriver: true }
+            )}
+            onHandlerStateChange={onHandlerStateChange}
           >
-            <PanGestureHandler
-              ref={this.drawer}
-              simultaneousHandlers={[this.scroll, this.masterdrawer]}
-              shouldCancelWhenOutside={false}
-              onGestureEvent={this._onGestureEvent}
-              onHandlerStateChange={this._onHandlerStateChange}
-            >
-              <Animated.View style={styles.container}>
-                <NativeViewGestureHandler
-                  ref={this.scroll}
-                  waitFor={this.masterdrawer}
-                  simultaneousHandlers={this.drawer}
+            <Animated.View style={styles.container}>
+              <NativeViewGestureHandler
+                ref={scrollRef}
+                waitFor={masterDrawerRef}
+                simultaneousHandlers={drawerRef}
+              >
+                <Animated.ScrollView
+                  style={[{ marginBottom: props.snapPoints[0] }]}
+                  bounces={false}
+                  onScrollBeginDrag={Animated.event(
+                    [{ nativeEvent: { contentOffset: { y: lastScrollY } } }],
+                    { useNativeDriver: true }
+                  )}
+                  scrollEventThrottle={1}
                 >
-                  <Animated.ScrollView
-                    style={[{ marginBottom: this.props.snapPoints[0] }]}
-                    bounces={false}
-                    onScrollBeginDrag={this._onRegisterLastScroll}
-                    scrollEventThrottle={1}
-                  >
-                    {this.props.children}
-                  </Animated.ScrollView>
-                </NativeViewGestureHandler>
-              </Animated.View>
-            </PanGestureHandler>
-          </Animated.View>
-        </View>
-      </TapGestureHandler>
-    );
-  }
+                  {props.children}
+                </Animated.ScrollView>
+              </NativeViewGestureHandler>
+            </Animated.View>
+          </PanGestureHandler>
+        </Animated.View>
+      </View>
+    </TapGestureHandler>
+  );
 }
