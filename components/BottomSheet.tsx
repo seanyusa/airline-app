@@ -1,4 +1,9 @@
-import { Animated, StyleSheet, View } from "react-native";
+import {
+  Animated,
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { ReactNode, useRef, useState } from "react";
 import {
   PanGestureHandler,
@@ -148,15 +153,26 @@ export default function BottomSheet(props: Props) {
                   )}
                   scrollEventThrottle={16}
                 >
-                  <View style={styles.topRow}>
-                    <SimpleLineIcons
-                      name={
-                        selectedSnapPointIndex === 1 ? "arrow-up" : "arrow-down"
-                      }
-                      size={26}
-                      color="#666666"
-                    />
-                  </View>
+                  <TouchableWithoutFeedback
+                    onPress={() => {
+                      snapToPoint(
+                        props.snapPoints[selectedSnapPointIndex === 1 ? 0 : 1]
+                      );
+                    }}
+                    hitSlop={{ top: 4, bottom: 4 }}
+                  >
+                    <View style={styles.topRow}>
+                      <SimpleLineIcons
+                        name={
+                          selectedSnapPointIndex === 1
+                            ? "arrow-up"
+                            : "arrow-down"
+                        }
+                        size={26}
+                        color="#666666"
+                      />
+                    </View>
+                  </TouchableWithoutFeedback>
                   {props.children}
                 </Animated.ScrollView>
               </NativeViewGestureHandler>
