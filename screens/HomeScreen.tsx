@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
   scrollView: {
     overflow: "visible",
   },
+  scrollContent: {
+    paddingBottom: 128,
+  },
   topRow: {
     display: "flex",
     flexDirection: "row",
@@ -54,6 +57,7 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <ScrollView
         style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.topRow}>

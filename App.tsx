@@ -1,4 +1,10 @@
-import { Dimensions, StyleSheet, SafeAreaView, Image } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  Text,
+} from "react-native";
 import HomeScreen from "./screens/HomeScreen";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -9,6 +15,7 @@ import BottomSheet from "./components/BottomSheet";
 SplashScreen.preventAutoHideAsync();
 
 const screenDimensions = Dimensions.get("screen");
+const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   app: {
@@ -49,7 +56,9 @@ export default function App() {
         resizeMode="cover"
       />
       <HomeScreen />
-      <BottomSheet />
+      <BottomSheet snapPoints={[windowHeight * 0.3, windowHeight * 0.83]}>
+        <Text>Testing</Text>
+      </BottomSheet>
     </SafeAreaView>
   );
 }

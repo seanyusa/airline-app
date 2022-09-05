@@ -1,15 +1,11 @@
-import { Animated, Dimensions, StyleSheet, Text, View } from "react-native";
-import { createRef, Component } from "react";
+import { Animated, StyleSheet, Text, View } from "react-native";
+import { createRef, Component, ReactNode } from "react";
 import {
   PanGestureHandler,
   NativeViewGestureHandler,
   State,
   TapGestureHandler,
 } from "react-native-gesture-handler";
-
-const HEADER_HEIGHT = 20;
-const windowHeight = Dimensions.get("window").height;
-const SNAP_POINTS_FROM_TOP = [windowHeight * 0.3, windowHeight * 0.83];
 
 const styles = StyleSheet.create({
   container: {
@@ -24,24 +20,26 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 5,
   },
-  header: {
-    height: HEADER_HEIGHT,
-    backgroundColor: "#17171e",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-  },
 });
 
-export default class BottomSheet extends Component {
+type Props = {
+  snapPoints: number[];
+  children?: ReactNode;
+};
+
+export default class BottomSheet extends Component<
+  Props,
+  { lastSnap: number }
+> {
   masterdrawer = createRef();
   drawer = createRef();
   drawerheader = createRef();
   scroll = createRef();
 
-  constructor(props: any) {
+  constructor(props: Props) {
     super(props);
-    const START = SNAP_POINTS_FROM_TOP[0];
-    const END = SNAP_POINTS_FROM_TOP[SNAP_POINTS_FROM_TOP.length - 1];
+    const START = props.snapPoints[0];
+    const END = props.snapPoints[props.snapPoints.length - 1];
 
     this.state = {
       lastSnap: END,
@@ -94,9 +92,9 @@ export default class BottomSheet extends Component {
       const endOffsetY =
         this.state.lastSnap + translationY + dragToss * velocityY;
 
-      let destSnapPoint = SNAP_POINTS_FROM_TOP[0];
-      for (let i = 0; i < SNAP_POINTS_FROM_TOP.length; i++) {
-        const snapPoint = SNAP_POINTS_FROM_TOP[i];
+      let destSnapPoint = this.props.snapPoints[0];
+      for (let i = 0; i < this.props.snapPoints.length; i++) {
+        const snapPoint = this.props.snapPoints[i];
         const distFromSnap = Math.abs(snapPoint - endOffsetY);
         if (distFromSnap < Math.abs(destSnapPoint - endOffsetY)) {
           destSnapPoint = snapPoint;
@@ -122,7 +120,7 @@ export default class BottomSheet extends Component {
       <TapGestureHandler
         maxDurationMs={100000}
         ref={this.masterdrawer}
-        maxDeltaY={this.state.lastSnap - SNAP_POINTS_FROM_TOP[0]}
+        maxDeltaY={this.state.lastSnap - this.props.snapPoints[0]}
       >
         <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
           <Animated.View
@@ -133,15 +131,6 @@ export default class BottomSheet extends Component {
               },
             ]}
           >
-            {/* <PanGestureHandler
-              ref={this.drawerheader}
-              simultaneousHandlers={[this.scroll, this.masterdrawer]}
-              shouldCancelWhenOutside={false}
-              onGestureEvent={this._onGestureEvent}
-              onHandlerStateChange={this._onHeaderHandlerStateChange}
-            >
-              <Animated.View style={styles.header} />
-            </PanGestureHandler> */}
             <PanGestureHandler
               ref={this.drawer}
               simultaneousHandlers={[this.scroll, this.masterdrawer]}
@@ -156,12 +145,12 @@ export default class BottomSheet extends Component {
                   simultaneousHandlers={this.drawer}
                 >
                   <Animated.ScrollView
-                    style={[{ marginBottom: SNAP_POINTS_FROM_TOP[0] }]}
+                    style={[{ marginBottom: this.props.snapPoints[0] }]}
                     bounces={false}
                     onScrollBeginDrag={this._onRegisterLastScroll}
                     scrollEventThrottle={1}
                   >
-                    <Text>Track your bags</Text>
+                    {this.props.children}
                   </Animated.ScrollView>
                 </NativeViewGestureHandler>
               </Animated.View>
