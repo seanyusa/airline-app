@@ -4,6 +4,8 @@ import {
   SafeAreaView,
   Image,
   Text,
+  View,
+  TouchableOpacity,
 } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
 import { useFonts } from "expo-font";
@@ -26,6 +28,27 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: screenDimensions.width,
     height: screenDimensions.height,
+  },
+  actionRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingTop: 8,
+  },
+  actionButtonContent: {
+    alignItems: "center",
+    width: 128,
+  },
+  actionCircle: {
+    backgroundColor: "#4693fa",
+    width: 44,
+    height: 44,
+    borderRadius: 44 / 2,
+    marginBottom: 4,
+  },
+  actionLabel: {
+    color: "#4693fa",
+    fontFamily: "OpenSans-SemiBold",
+    fontSize: 14,
   },
 });
 
@@ -56,8 +79,27 @@ export default function App() {
         resizeMode="cover"
       />
       <HomeScreen />
-      <BottomSheet snapPoints={[windowHeight * 0.3, windowHeight * 0.83]}>
-        <Text>Testing</Text>
+      <BottomSheet snapPoints={[windowHeight * 0.3, windowHeight * 0.82]}>
+        <View style={styles.actionRow}>
+          <TouchableOpacity>
+            <View style={styles.actionButtonContent}>
+              <View style={styles.actionCircle} />
+              <Text style={styles.actionLabel}>Flight status</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.actionButtonContent}>
+              <View style={styles.actionCircle} />
+              <Text style={styles.actionLabel}>Find trip</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.actionButtonContent}>
+              <View style={styles.actionCircle} />
+              <Text style={styles.actionLabel}>Book flights</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </BottomSheet>
     </SafeAreaView>
   );
