@@ -61,6 +61,18 @@ export default function BottomSheet(props: Props) {
     })
   ).current;
 
+  const snapToPoint = (destSnapPoint: number, velocity?: number) => {
+    setLastSnapPoint(destSnapPoint);
+
+    Animated.spring(translateYOffset, {
+      velocity: velocity,
+      tension: 68,
+      friction: 12,
+      toValue: destSnapPoint,
+      useNativeDriver: true,
+    }).start();
+  };
+
   const onHandlerStateChange = ({
     nativeEvent,
   }: {
@@ -80,18 +92,11 @@ export default function BottomSheet(props: Props) {
         }
       });
 
-      setLastSnapPoint(destSnapPoint);
       translateYOffset.extractOffset();
       translateYOffset.setValue(translationY);
       translateYOffset.flattenOffset();
       dragY.setValue(0);
-      Animated.spring(translateYOffset, {
-        velocity: velocityY,
-        tension: 68,
-        friction: 12,
-        toValue: destSnapPoint,
-        useNativeDriver: true,
-      }).start();
+      snapToPoint(destSnapPoint, velocityY);
     }
   };
 
