@@ -34,13 +34,13 @@ export default function BottomSheet(props: Props) {
   const drawerRef = useRef();
   const scrollRef = useRef();
 
-  const START = props.snapPoints[0];
-  const END = props.snapPoints[props.snapPoints.length - 1];
-  const [lastSnapPoint, setLastSnapPoint] = useState(END);
+  const startSnapPoint = props.snapPoints[0];
+  const endSnapPoint = props.snapPoints[props.snapPoints.length - 1];
+  const [lastSnapPoint, setLastSnapPoint] = useState(endSnapPoint);
   const lastScrollY = useRef(new Animated.Value(0)).current;
   const lastScrollYValue = useRef(0);
   const dragY = useRef(new Animated.Value(0)).current;
-  const translateYOffset = useRef(new Animated.Value(END)).current;
+  const translateYOffset = useRef(new Animated.Value(endSnapPoint)).current;
 
   lastScrollY.addListener(({ value }) => {
     lastScrollYValue.current = value;
@@ -55,8 +55,8 @@ export default function BottomSheet(props: Props) {
       translateYOffset,
       Animated.add(dragY, reverseLastScrollY)
     ).interpolate({
-      inputRange: [START, END],
-      outputRange: [START, END],
+      inputRange: [startSnapPoint, endSnapPoint],
+      outputRange: [startSnapPoint, endSnapPoint],
       extrapolate: "clamp",
     })
   ).current;
@@ -73,13 +73,12 @@ export default function BottomSheet(props: Props) {
       const endOffsetY = lastSnapPoint + translationY + dragToss * velocityY;
 
       let destSnapPoint = props.snapPoints[0];
-      for (let i = 0; i < props.snapPoints.length; i++) {
-        const snapPoint = props.snapPoints[i];
+      props.snapPoints.forEach((snapPoint) => {
         const distFromSnap = Math.abs(snapPoint - endOffsetY);
         if (distFromSnap < Math.abs(destSnapPoint - endOffsetY)) {
           destSnapPoint = snapPoint;
         }
-      }
+      });
 
       setLastSnapPoint(destSnapPoint);
       translateYOffset.extractOffset();
@@ -102,13 +101,11 @@ export default function BottomSheet(props: Props) {
       ref={masterDrawerRef}
       maxDeltaY={lastSnapPoint - props.snapPoints[0]}
     >
-      <View style={StyleSheet.absoluteFillObject} pointerEvents="box-none">
+      <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
         <Animated.View
           style={[
-            StyleSheet.absoluteFillObject,
-            {
-              transform: [{ translateY: translateY }],
-            },
+            StyleSheet.absoluteFill,
+            { transform: [{ translateY: translateY }] },
           ]}
         >
           <PanGestureHandler
@@ -134,7 +131,7 @@ export default function BottomSheet(props: Props) {
                     [{ nativeEvent: { contentOffset: { y: lastScrollY } } }],
                     { useNativeDriver: true }
                   )}
-                  scrollEventThrottle={1}
+                  scrollEventThrottle={16}
                 >
                   {props.children}
                 </Animated.ScrollView>
