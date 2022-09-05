@@ -10,11 +10,12 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 19,
-    fontWeight: "500",
+    fontFamily: "OpenSans-SemiBold",
     marginBottom: 6,
   },
   text: {
     color: "#ffffff",
+    fontFamily: "OpenSans-Regular",
   },
 });
 

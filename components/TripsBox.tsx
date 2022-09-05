@@ -12,12 +12,13 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "#bbbbbb",
     marginBottom: 8,
+    fontFamily: "OpenSans-Regular",
   },
   numTrips: {
     fontSize: 30,
-    fontWeight: "300",
     color: "#ffffff",
     marginBottom: 12,
+    fontFamily: "OpenSans-Light",
   },
   divider: {
     height: 1,
@@ -29,10 +30,12 @@ const styles = StyleSheet.create({
   tripName: {
     fontSize: 22,
     color: "#3d49eb",
+    fontFamily: "OpenSans-Regular",
   },
   tripDetails: {
     fontSize: 14,
     color: "#dddddd",
+    fontFamily: "OpenSans-Regular",
   },
 });
 

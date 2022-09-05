@@ -15,10 +15,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#fff",
     marginBottom: 8,
+    fontFamily: "OpenSans-Regular",
   },
   content: {
     fontSize: 13,
     color: "#fff",
+    fontFamily: "OpenSans-Regular",
   },
 });
 
