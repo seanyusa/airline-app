@@ -1,4 +1,4 @@
-import { Animated, StyleSheet, Text, View } from "react-native";
+import { Animated, StyleSheet, View } from "react-native";
 import { createRef, Component, ReactNode } from "react";
 import {
   PanGestureHandler,
@@ -33,7 +33,6 @@ export default class BottomSheet extends Component<
 > {
   masterdrawer = createRef();
   drawer = createRef();
-  drawerheader = createRef();
   scroll = createRef();
 
   constructor(props: Props) {
