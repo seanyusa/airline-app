@@ -12,10 +12,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 17,
-    fontWeight: "600",
     color: "#fff",
     marginBottom: 8,
-    fontFamily: "OpenSans-Regular",
+    fontFamily: "OpenSans-SemiBold",
   },
   content: {
     fontSize: 13,
