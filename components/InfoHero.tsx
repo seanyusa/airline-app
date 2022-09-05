@@ -1,5 +1,12 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { StyleSheet, Text, View, ViewStyle } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  View,
+  ViewStyle,
+} from "react-native";
+import * as WebBrowser from "expo-web-browser";
 
 const styles = StyleSheet.create({
   container: {
@@ -38,13 +45,25 @@ type Props = {
 
 export default function InfoHero(props: Props) {
   return (
-    <View style={[styles.container, props.style]}>
-      <LinearGradient
-        colors={["rgba(0,0,0,0.6)", "rgba(0,0,0,0.2)", "rgba(0,0,0,0)"]}
-        style={styles.contentBackground}
-      />
-      <Text style={styles.title}>{props.title}</Text>
-      <Text style={styles.content}>{props.description}</Text>
-    </View>
+    <TouchableNativeFeedback
+      onPress={() => {
+        WebBrowser.openBrowserAsync(
+          "https://exploreamerican.com/newaadvantage",
+          {
+            presentationStyle:
+              WebBrowser.WebBrowserPresentationStyle.PAGE_SHEET,
+          }
+        );
+      }}
+    >
+      <View style={[styles.container, props.style]}>
+        <LinearGradient
+          colors={["rgba(0,0,0,0.6)", "rgba(0,0,0,0.2)", "rgba(0,0,0,0)"]}
+          style={styles.contentBackground}
+        />
+        <Text style={styles.title}>{props.title}</Text>
+        <Text style={styles.content}>{props.description}</Text>
+      </View>
+    </TouchableNativeFeedback>
   );
 }
