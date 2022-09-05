@@ -8,11 +8,16 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
   },
+  scrollView: {
+    overflow: "visible",
+  },
   trips: {
     marginTop: 12,
   },
   infoArea: {
     marginTop: 12,
+    marginHorizontal: -6,
+    overflow: "visible",
   },
   infoItem: {
     marginHorizontal: 6,
@@ -22,7 +27,7 @@ const styles = StyleSheet.create({
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.scrollView}>
         <MemberBox />
         <TripsBox style={styles.trips} />
         <ScrollView
@@ -33,6 +38,7 @@ export default function HomeScreen() {
           decelerationRate={0}
           snapToInterval={324 + 12}
           snapToAlignment="center"
+          showsHorizontalScrollIndicator={false}
         >
           <InfoHero style={styles.infoItem} />
           <InfoHero style={styles.infoItem} />
