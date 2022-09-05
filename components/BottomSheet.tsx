@@ -8,6 +8,7 @@ import {
   PanGestureHandlerEventPayload,
   HandlerStateChangeEventPayload,
 } from "react-native-gesture-handler";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +22,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 8,
     elevation: 5,
+  },
+  topRow: {
+    paddingTop: 4,
+    flexDirection: "row",
+    justifyContent: "center",
   },
 });
 
@@ -45,6 +51,10 @@ export default function BottomSheet(props: Props) {
   lastScrollY.addListener(({ value }) => {
     lastScrollYValue.current = value;
   });
+
+  const selectedSnapPointIndex = props.snapPoints.findIndex(
+    (snapPoint) => snapPoint === lastSnapPoint
+  );
 
   const reverseLastScrollY = useRef(
     Animated.multiply(new Animated.Value(-1), lastScrollY)
@@ -138,6 +148,15 @@ export default function BottomSheet(props: Props) {
                   )}
                   scrollEventThrottle={16}
                 >
+                  <View style={styles.topRow}>
+                    <SimpleLineIcons
+                      name={
+                        selectedSnapPointIndex === 1 ? "arrow-up" : "arrow-down"
+                      }
+                      size={26}
+                      color="#666666"
+                    />
+                  </View>
                   {props.children}
                 </Animated.ScrollView>
               </NativeViewGestureHandler>
