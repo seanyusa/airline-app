@@ -1,7 +1,14 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import MemberBox from "../components/MemberBox";
 import TripsBox from "../components/TripsBox";
 import InfoHero from "../components/InfoHero";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const styles = StyleSheet.create({
   container: {
@@ -14,13 +21,18 @@ const styles = StyleSheet.create({
   topRow: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
     paddingHorizontal: 12,
-    paddingVertical: 16,
+    paddingVertical: 20,
   },
   logo: {
+    flex: 1,
     fontSize: 21,
     color: "#fff",
     fontFamily: "OpenSans-SemiBold",
+  },
+  topIcon: {
+    marginLeft: 24,
   },
   trips: {
     marginTop: 12,
@@ -35,6 +47,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const hitSlop = { top: 16, left: 12, right: 12, bottom: 16 };
+
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
@@ -44,6 +58,12 @@ export default function HomeScreen() {
       >
         <View style={styles.topRow}>
           <Text style={styles.logo}>Airline</Text>
+          <TouchableOpacity style={styles.topIcon} hitSlop={hitSlop}>
+            <FontAwesome name="comment-o" size={24} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.topIcon} hitSlop={hitSlop}>
+            <FontAwesome name="envelope-o" size={24} color="white" />
+          </TouchableOpacity>
         </View>
         <MemberBox />
         <TripsBox style={styles.trips} />
