@@ -1,4 +1,3 @@
-import "react-native-gesture-handler";
 import { StyleSheet, SafeAreaView } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
 
