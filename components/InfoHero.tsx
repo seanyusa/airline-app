@@ -1,5 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
 import {
+  Image,
   StyleSheet,
   Text,
   TouchableNativeFeedback,
@@ -17,12 +18,20 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     height: 380,
     width: 324,
+    overflow: "hidden",
+  },
+  backgroundImage: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   contentBackground: {
     position: "absolute",
     left: 0,
     right: 0,
-    height: 128,
+    height: 148,
   },
   title: {
     fontSize: 17,
@@ -41,6 +50,7 @@ type Props = {
   style?: ViewStyle;
   title: string;
   description: string;
+  imageUri: string;
 };
 
 export default function InfoHero(props: Props) {
@@ -57,8 +67,13 @@ export default function InfoHero(props: Props) {
       }}
     >
       <View style={[styles.container, props.style]}>
+        <Image
+          source={{ uri: props.imageUri }}
+          resizeMode="cover"
+          style={styles.backgroundImage}
+        />
         <LinearGradient
-          colors={["rgba(0,0,0,0.6)", "rgba(0,0,0,0.2)", "rgba(0,0,0,0)"]}
+          colors={["rgba(0,0,0,0.8)", "rgba(0,0,0,0.4)", "rgba(0,0,0,0)"]}
           style={styles.contentBackground}
         />
         <Text style={styles.title}>{props.title}</Text>

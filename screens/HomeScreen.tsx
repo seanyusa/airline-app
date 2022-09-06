@@ -85,16 +85,19 @@ export default function HomeScreen() {
             style={styles.infoItem}
             title="Turn shopping into travel"
             description="Everyday spend can earn you miles to redeem on travel plus Loyalty Points toward status at the same time."
+            imageUri="https://images.pexels.com/photos/4855422/pexels-photo-4855422.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
           />
           <InfoHero
             style={styles.infoItem}
             title="Experience the Northern Lights"
             description="Find great fares to Alaska."
+            imageUri="https://images.pexels.com/photos/1933316/pexels-photo-1933316.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
           />
           <InfoHero
             style={styles.infoItem}
             title="Where's open, what's required?"
             description="Check entry restrictions and COVID-19 travel requirements for countries around the world."
+            imageUri="https://images.pexels.com/photos/3943882/pexels-photo-3943882.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
           />
         </ScrollView>
       </ScrollView>
