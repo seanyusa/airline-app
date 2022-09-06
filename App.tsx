@@ -13,6 +13,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 import backgroundImage from "./assets/dominika-roseclay-night-sky.jpg";
 import BottomSheet from "./components/BottomSheet";
+import Feather from "@expo/vector-icons/Feather";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -44,6 +46,8 @@ const styles = StyleSheet.create({
     height: 44,
     borderRadius: 44 / 2,
     marginBottom: 4,
+    alignItems: "center",
+    justifyContent: "center",
   },
   actionLabel: {
     color: "#4693fa",
@@ -83,19 +87,29 @@ export default function App() {
         <View style={styles.actionRow}>
           <TouchableOpacity>
             <View style={styles.actionButtonContent}>
-              <View style={styles.actionCircle} />
+              <View style={styles.actionCircle}>
+                <Feather name="clock" size={24} color="#ffffff" />
+              </View>
               <Text style={styles.actionLabel}>Flight status</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.actionButtonContent}>
-              <View style={styles.actionCircle} />
+              <View style={styles.actionCircle}>
+                <Feather name="search" size={24} color="#ffffff" />
+              </View>
               <Text style={styles.actionLabel}>Find trip</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.actionButtonContent}>
-              <View style={styles.actionCircle} />
+              <View style={styles.actionCircle}>
+                <Ionicons
+                  name="ios-airplane-outline"
+                  size={26}
+                  color="#ffffff"
+                />
+              </View>
               <Text style={styles.actionLabel}>Book flights</Text>
             </View>
           </TouchableOpacity>

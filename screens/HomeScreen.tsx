@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     overflow: "visible",
   },
   scrollContent: {
-    paddingBottom: 128,
+    paddingBottom: 136,
   },
   topRow: {
     display: "flex",
