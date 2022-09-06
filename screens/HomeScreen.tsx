@@ -5,9 +5,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import MemberBox from "../components/MemberBox";
-import TripsBox from "../components/TripsBox";
-import InfoHero from "../components/InfoHero";
+import MemberBox from "components/MemberBox";
+import TripsBox from "components/TripsBox";
+import InfoHero from "components/InfoHero";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const styles = StyleSheet.create({

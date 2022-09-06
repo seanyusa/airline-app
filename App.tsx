@@ -1,10 +1,10 @@
 import { Dimensions, StyleSheet, SafeAreaView, Image } from "react-native";
-import HomeScreen from "./screens/HomeScreen";
+import HomeScreen from "screens/HomeScreen";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
-import backgroundImage from "./assets/dominika-roseclay-night-sky.jpg";
-import BottomMenu from "./components/BottomMenu";
+import backgroundImage from "assets/dominika-roseclay-night-sky.jpg";
+import BottomMenu from "components/BottomMenu";
 
 SplashScreen.preventAutoHideAsync();
 
