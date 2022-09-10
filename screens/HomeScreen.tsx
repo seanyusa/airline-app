@@ -61,7 +61,7 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.topRow}>
-          <Text style={styles.logo}>Airline</Text>
+          <Text style={styles.logo}>Airline App</Text>
           <TouchableOpacity style={styles.topIcon} hitSlop={hitSlop}>
             <FontAwesome name="comment-o" size={24} color="white" />
           </TouchableOpacity>
