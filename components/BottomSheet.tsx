@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   TouchableWithoutFeedback,
+  Image,
 } from "react-native";
 import { ReactNode, useRef, useState } from "react";
 import {
@@ -13,7 +14,8 @@ import {
   PanGestureHandlerEventPayload,
   HandlerStateChangeEventPayload,
 } from "react-native-gesture-handler";
-import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import dragDownArrow from "assets/drag-down-arrow.png";
+import dragUpArrow from "assets/drag-up-arrow.png";
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +31,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   topRow: {
-    paddingTop: 4,
+    paddingTop: 8,
+    paddingBottom: 12,
     flexDirection: "row",
     justifyContent: "center",
   },
@@ -162,15 +165,11 @@ export default function BottomSheet(props: Props) {
                     hitSlop={{ top: 4, bottom: 4 }}
                   >
                     <View style={styles.topRow}>
-                      <SimpleLineIcons
-                        name={
-                          selectedSnapPointIndex === 1
-                            ? "arrow-up"
-                            : "arrow-down"
-                        }
-                        size={26}
-                        color="#666666"
-                      />
+                      {selectedSnapPointIndex === 1 ? (
+                        <Image source={dragUpArrow} />
+                      ) : (
+                        <Image source={dragDownArrow} />
+                      )}
                     </View>
                   </TouchableWithoutFeedback>
                   {props.children}
